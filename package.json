@@ -1,0 +1,62 @@
+{
+  "name": "kvs-parser",
+  "version": "0.0.1",
+  "description": "AWS Kinesis Video Stream Parser Library",
+  "main": "index.js",
+  "scripts": {
+    "test": "ava"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/piercus/kvs-parser.git"
+  },
+  "release": {
+    "branches": [
+      "master"
+    ],
+    "plugins": [
+      "@semantic-release/commit-analyzer",
+      "@semantic-release/release-notes-generator",
+      "@semantic-release/npm",
+      [
+        "@semantic-release/github",
+        {
+          "assets": [
+            {
+              "path": "dist/kalman-filter.js",
+              "label": "kalman-filter.js (Raw JS distribution)"
+            },
+            {
+              "path": "dist/kalman-filter.min.js",
+              "label": "kalman-filter.min.js (Minified JS distribution)"
+            }
+          ]
+        }
+      ],
+      "@semantic-release/git"
+    ]
+  },
+  "keywords": [
+    "kinesis",
+    "video",
+    "stream",
+    "kvs",
+    "parser",
+    "js",
+    "stream",
+    "aws",
+    "encoding",
+    "ebml",
+    "decoding"
+  ],
+  "author": "Pierre Colle <piercus@gmail.com>",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/piercus/kvs-parser/issues"
+  },
+  "homepage": "https://github.com/piercus/kvs-parser#readme",
+  "devDependencies": {
+    "ava": "^4.0.1",
+    "xo": "^0.48.0"
+  }
+}
