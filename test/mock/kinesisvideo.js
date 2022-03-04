@@ -1,5 +1,11 @@
-const AWS = require('aws-sdk');
+const kinesisvideo = {
+    getDataEndPoint() {
+        return {
+            "data": {
+                "DataEndPoint": "https://fakeurl"
+            }
+        }
+    }
+}
 
-const kinesisvideo = new AWS.KinesisVideo();
-
-module.exports = { kinesisvideo }
+module.exports = kinesisvideo

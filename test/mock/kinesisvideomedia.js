@@ -1,5 +1,5 @@
-const AWS = require('aws-sdk');
+const kinesisvideomedia = {
+    getMedia(params) { }
+}
 
-const kinesisvideomedia = new AWS.KinesisVideoMedia();
-
-module.exports = { kinesisvideomedia }
+module.exports = kinesisvideomedia
