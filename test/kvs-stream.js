@@ -13,13 +13,10 @@ test('KvsStream', t => {
         StreamName: 'test-stream'
     };
 
-    const error = t.throws(() => {
-        new KvsStream(getMediaParams, {
-            kinesisvideomedia,
-            kinesisvideo
-        });
-    })
+    new KvsStream(getMediaParams, {
+        kinesisvideomedia,
+        kinesisvideo
+    });
 
-
-    t.is(error.message, 'not implemented')
+    t.pass()
 })
