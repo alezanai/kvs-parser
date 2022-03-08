@@ -13,10 +13,18 @@ test('KvsStream', t => {
         StreamName: 'test-stream'
     };
 
-    new KvsStream(getMediaParams, {
+    const stream = new KvsStream(getMediaParams, {
         kinesisvideomedia,
         kinesisvideo
     });
 
-    t.pass()
+    let count = 0
+    const request = stream.s3Instances.kinesisvideomedia.getMedia()
+    request.createReadStream().on('data', buffer => {
+        console.log(buffer);
+        count++;
+
+    });
+    console.log(count);
+    t.is(count, 100);
 })
