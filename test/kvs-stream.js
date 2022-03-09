@@ -40,7 +40,7 @@ test('KvsStream', t => {
         })
     }
 
-    return readStreamPromise().then(data => {
-        t.is(data, 1100)
+    return readStreamPromise().then(count => {
+        t.is(count, 1100)
     });
 })
