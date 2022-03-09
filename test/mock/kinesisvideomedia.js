@@ -1,21 +1,26 @@
 const fs = require('fs')
 const { Readable } = require('stream')
 
-let dataToStream = []
 class Stream extends Readable {
-    constructor(opts) {
-        super(opts)
+    count = 0;
+    filenames = []
+    constructor(foldername) {
+        super()
+        this.filenames = fs.readdirSync(foldername)
     }
 
     _read() {
-        this.push(dataToStream.shift())
-        if (!dataToStream.length) {
-            this.push(null)
+        if (this.count <= this.filenames.length) {
+            this.push(this.filenames[this.count])
+            this.count++
+        } else {
+            this.emit('close', 200)
         }
     }
 
     _destroy() {
-        dataToStream = null
+        count = 0;
+        this.filenames = null
     }
 }
 
@@ -23,8 +28,7 @@ const kinesisvideomedia = {
     getMedia() {
         const request = {
             createReadStream() {
-                dataToStream = fs.readdirSync('test/data/buffers/test-stream1')
-                return new Stream()
+                return new Stream('test/data/buffers/test-stream1')
             }
         }
         return request

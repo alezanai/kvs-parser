@@ -18,13 +18,31 @@ test('KvsStream', t => {
         kinesisvideo
     });
 
-    let count = 0
-    const request = stream.s3Instances.kinesisvideomedia.getMedia()
-    request.createReadStream().on('data', buffer => {
-        console.log(buffer);
-        count++;
+    const request = stream.awsInstances.kinesisvideomedia.getMedia()
+    const streamData = request.createReadStream();
 
+    const readStreamPromise = () => {
+        return new Promise((resolve, reject) => {
+            let count = 0;
+            stream.on('data', buffer => {
+                console.log(buffer);
+                count++
+            });
+
+            stream.on('close', code => {
+                console.log("Closing stream with code", code);
+                resolve(count)
+            })
+
+            stream.on('error', err => {
+                console.log("Error", err);
+                reject(err)
+            })
+
+        })
+    }
+
+    return readStreamPromise().then(data => {
+        t.is(data, 1100)
     });
-    console.log(count);
-    t.is(count, 100);
 })
