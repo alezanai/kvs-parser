@@ -14,12 +14,12 @@ class Stream extends Readable {
             this.push(this.filenames[this.count])
             this.count++
         } else {
-            this.emit('close', 200)
+            this.push(null)
         }
     }
 
     _destroy() {
-        count = 0;
+        this.count = 0;
         this.filenames = null
     }
 }

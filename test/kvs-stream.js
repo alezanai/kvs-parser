@@ -18,8 +18,6 @@ test('KvsStream', t => {
         kinesisvideo
     });
 
-    const request = stream.awsInstances.kinesisvideomedia.getMedia()
-    const streamData = request.createReadStream();
 
     const readStreamPromise = () => {
         return new Promise((resolve, reject) => {
@@ -29,8 +27,8 @@ test('KvsStream', t => {
                 count++
             });
 
-            stream.on('close', code => {
-                console.log("Closing stream with code", code);
+            stream.on('end', _ => {
+                console.log("Ending Stream");
                 resolve(count)
             })
 
