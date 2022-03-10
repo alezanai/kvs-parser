@@ -4,7 +4,7 @@
   "description": "AWS Kinesis Video Stream Parser Library",
   "main": "index.js",
   "scripts": {
-    "test": "ava"
+    "test": "xo && ava"
   },
   "repository": {
     "type": "git",
