@@ -1,11 +1,11 @@
 const kinesisvideo = {
-    getDataEndPoint() {
-        return {
-            "data": {
-                "DataEndPoint": "https://fakeurl"
-            }
-        }
-    }
-}
+	getDataEndPoint() {
+		return {
+			data: {
+				DataEndPoint: 'https://fakeurl',
+			},
+		};
+	},
+};
 
-module.exports = kinesisvideo
+module.exports = kinesisvideo;
