@@ -4,7 +4,7 @@
   "description": "AWS Kinesis Video Stream Parser Library",
   "main": "index.js",
   "scripts": {
-    "test": "ava"
+    "test": "xo && ava"
   },
   "repository": {
     "type": "git",
@@ -58,5 +58,16 @@
   "devDependencies": {
     "ava": "^4.0.1",
     "xo": "^0.48.0"
+  },
+  "ava": {
+    "files": [
+      "!test/mock/*"
+    ]
+  },
+  "xo": {
+    "rules": {
+      "ava/prefer-async-await": 0,
+      "unicorn/prefer-module": 0
+    }
   }
 }
