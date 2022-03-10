@@ -55,6 +55,9 @@
     "url": "https://github.com/piercus/kvs-parser/issues"
   },
   "homepage": "https://github.com/piercus/kvs-parser#readme",
+  "dependencies": {
+    "aws-sdk": "^2.1090.0"
+  },
   "devDependencies": {
     "ava": "^4.0.1",
     "xo": "^0.48.0"
