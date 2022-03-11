@@ -2,11 +2,10 @@ const fs = require('fs');
 const {Readable} = require('stream');
 
 class Stream extends Readable {
-	count = 0;
-	filenames = [];
 	constructor(foldername) {
 		super();
 		this.filenames = fs.readdirSync(foldername);
+		this.count = 0;
 	}
 
 	_read() {

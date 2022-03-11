@@ -19,15 +19,14 @@ test('KvsStream', t => {
 	});
 
 	const readStreamPromise = () => new Promise((resolve, reject) => {
-		let count = 0;
-		stream.on('data', buffer => {
-			console.log(buffer);
-			count++;
+		let ebmlDataTag = {};
+		stream.on('data', fragment => {
+			ebmlDataTag = JSON.parse(fragment);
 		});
 
 		stream.on('end', _ => {
 			console.log('Ending Stream');
-			resolve(count);
+			resolve(ebmlDataTag);
 		});
 
 		stream.on('error', error => {
@@ -36,7 +35,7 @@ test('KvsStream', t => {
 		});
 	});
 
-	return readStreamPromise().then(count => {
-		t.is(count, 1100);
+	return readStreamPromise().then(ebmlDataTag => {
+		t.is(typeof (ebmlDataTag.id), 'number');
 	});
 });

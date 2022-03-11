@@ -60,7 +60,8 @@
   },
   "devDependencies": {
     "ava": "^4.0.1",
-    "xo": "^0.48.0"
+    "xo": "^0.48.0",
+    "ebml-stream": "^1.0.3"
   },
   "ava": {
     "files": [
