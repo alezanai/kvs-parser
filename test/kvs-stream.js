@@ -17,25 +17,26 @@ test('KvsStream', t => {
 		kinesisvideomedia,
 		kinesisvideo,
 	});
-
+	let count = 0;
 	const readStreamPromise = () => new Promise((resolve, reject) => {
-		let ebmlDataTag = {};
 		stream.on('data', fragment => {
-			ebmlDataTag = fragment;
+			t.is(typeof (fragment.id), 'number');
+			t.is(typeof (fragment.type), 'string');
+			t.true(['m', 'u', 'b'].includes(fragment.type), `type ${fragment.type} is not expected as mater tag`);
+
+			count++;
 		});
 
 		stream.on('end', _ => {
-			console.log('Ending Stream');
-			resolve(ebmlDataTag);
+			resolve();
 		});
 
 		stream.on('error', error => {
-			console.log('Error', error);
 			reject(error);
 		});
 	});
 
-	return readStreamPromise().then(ebmlDataTag => {
-		t.is(typeof (ebmlDataTag.id), 'number');
+	return readStreamPromise().then(() => {
+		t.is(count, 251);
 	});
 });
