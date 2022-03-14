@@ -21,9 +21,8 @@ test('KvsStream', t => {
 	const readStreamPromise = () => new Promise((resolve, reject) => {
 		stream.on('data', fragment => {
 			t.is(typeof (fragment.id), 'number');
-			t.is(typeof (fragment.type), 'string');
-			t.true(['m', 'u', 'b'].includes(fragment.type), `type ${fragment.type} is not expected as mater tag`);
-
+			t.is(fragment.type, 'm');
+			t.is(fragment.idName, 'EBML');
 			count++;
 		});
 
@@ -37,6 +36,6 @@ test('KvsStream', t => {
 	});
 
 	return readStreamPromise().then(() => {
-		t.is(count, 251);
+		t.is(count, 16);
 	});
 });
