@@ -21,7 +21,7 @@ test('KvsStream', t => {
 	const readStreamPromise = () => new Promise((resolve, reject) => {
 		let ebmlDataTag = {};
 		stream.on('data', fragment => {
-			ebmlDataTag = JSON.parse(fragment);
+			ebmlDataTag = fragment;
 		});
 
 		stream.on('end', _ => {
