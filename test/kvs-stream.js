@@ -22,7 +22,8 @@ test('KvsStream', t => {
 		stream.on('data', fragment => {
 			t.is(typeof (fragment.id), 'number');
 			t.is(fragment.type, 'm');
-			t.is(fragment.idName, 'EBML');
+			t.true(['EBML', 'Segment'].includes(fragment.idName));
+
 			count++;
 		});
 
@@ -36,6 +37,6 @@ test('KvsStream', t => {
 	});
 
 	return readStreamPromise().then(() => {
-		t.is(count, 16);
+		t.is(count, 32);
 	});
 });
