@@ -2,16 +2,18 @@ const fs = require('fs');
 const {Readable} = require('stream');
 
 class Stream extends Readable {
-	count = 0;
-	filenames = [];
-	constructor(foldername) {
+	constructor(folder) {
 		super();
-		this.filenames = fs.readdirSync(foldername);
+		this.filenames = fs.readdirSync(folder);
+		this.folder = folder;
+		this.count = 0;
 	}
 
 	_read() {
-		if (this.count <= this.filenames.length) {
-			this.push(this.filenames[this.count]);
+		if (this.count < this.filenames.length) {
+			const filename = this.filenames[this.count];
+			const filepath = this.folder + '/' + filename;
+			this.push(fs.readFileSync(filepath));
 			this.count++;
 		} else {
 			this.push(null);

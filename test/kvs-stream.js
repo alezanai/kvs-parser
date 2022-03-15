@@ -17,26 +17,26 @@ test('KvsStream', t => {
 		kinesisvideomedia,
 		kinesisvideo,
 	});
-
+	let count = 0;
 	const readStreamPromise = () => new Promise((resolve, reject) => {
-		let count = 0;
-		stream.on('data', buffer => {
-			console.log(buffer);
+		stream.on('data', fragment => {
+			t.is(typeof (fragment.id), 'number');
+			t.is(fragment.type, 'm');
+			t.true(['EBML', 'Segment'].includes(fragment.idName));
+
 			count++;
 		});
 
 		stream.on('end', _ => {
-			console.log('Ending Stream');
-			resolve(count);
+			resolve();
 		});
 
 		stream.on('error', error => {
-			console.log('Error', error);
 			reject(error);
 		});
 	});
 
-	return readStreamPromise().then(count => {
-		t.is(count, 1100);
+	return readStreamPromise().then(() => {
+		t.is(count, 32);
 	});
 });
