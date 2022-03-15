@@ -16,14 +16,30 @@ test('FrameStream', t => {
 		kinesisvideo,
 	});
 
-	stream.on('data', ({tags}) => {
-		// Tags contains
-		t.is(typeof (tags.AWS_KINESISVIDEO_CONTINUATION_TOKEN), 'string');
-		t.is(typeof (tags.AWS_KINESISVIDEO_FRAGMENT_NUMBER), 'number');
-		t.is(typeof (tags.AWS_KINESISVIDEO_SERVER_TIMESTAMP), 'string');
-		t.is(typeof (tags.AWS_KINESISVIDEO_PRODUCER_TIMESTAMP), 'string');
-		t.is(typeof (tags.AWS_KINESISVIDEO_ERROR_CODE), 'undefined');
-		t.is(typeof (tags.AWS_KINESISVIDEO_ERROR_ID), 'undefined');
+	let count = 0;
+	const readStreamPromise = () => new Promise((resolve, reject) => {
+		stream.on('data', ({ tags }) => {
+			// Tags contains
+			t.is(typeof (tags.AWS_KINESISVIDEO_CONTINUATION_TOKEN), 'string');
+			t.is(typeof (tags.AWS_KINESISVIDEO_FRAGMENT_NUMBER), 'number');
+			t.is(typeof (tags.AWS_KINESISVIDEO_SERVER_TIMESTAMP), 'string');
+			t.is(typeof (tags.AWS_KINESISVIDEO_PRODUCER_TIMESTAMP), 'string');
+			t.is(typeof (tags.AWS_KINESISVIDEO_ERROR_CODE), 'undefined');
+			t.is(typeof (tags.AWS_KINESISVIDEO_ERROR_ID), 'undefined');
+			count++;
+		});
+
+		stream.on('end', _ => {
+			resolve();
+		});
+
+		stream.on('error', error => {
+			reject(error);
+		});
+	});
+
+	return readStreamPromise().then(() => {
+		t.is(count, 32);
 	});
 });
 
