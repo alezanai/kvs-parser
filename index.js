@@ -1,3 +1,3 @@
 module.exports = {
-	KvsStream: require('./lib/kvs-stream')
-}
+	KvsStream: require('./lib/kvs-stream.js'),
+};
