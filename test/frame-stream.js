@@ -21,7 +21,7 @@ test('FrameStream', t => {
 		stream.on('data', ({tags}) => {
 			// Tags contains
 			t.is(typeof (tags.AWS_KINESISVIDEO_CONTINUATION_TOKEN), 'string');
-			t.is(typeof (tags.AWS_KINESISVIDEO_FRAGMENT_NUMBER), 'number');
+			t.is(typeof (tags.AWS_KINESISVIDEO_FRAGMENT_NUMBER), 'string');
 			t.is(typeof (tags.AWS_KINESISVIDEO_SERVER_TIMESTAMP), 'string');
 			t.is(typeof (tags.AWS_KINESISVIDEO_PRODUCER_TIMESTAMP), 'string');
 			t.is(typeof (tags.AWS_KINESISVIDEO_ERROR_CODE), 'undefined');
