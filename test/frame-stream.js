@@ -18,7 +18,7 @@ test('FrameStream', t => {
 
 	let count = 0;
 	const readStreamPromise = () => new Promise((resolve, reject) => {
-		stream.on('data', ({ tags }) => {
+		stream.on('data', ({tags}) => {
 			// Tags contains
 			t.is(typeof (tags.AWS_KINESISVIDEO_CONTINUATION_TOKEN), 'string');
 			t.is(typeof (tags.AWS_KINESISVIDEO_FRAGMENT_NUMBER), 'number');
@@ -39,7 +39,7 @@ test('FrameStream', t => {
 	});
 
 	return readStreamPromise().then(() => {
-		t.is(count, 32);
+		t.is(count, 16);
 	});
 });
 
