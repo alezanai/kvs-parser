@@ -62,7 +62,7 @@ test('FrameObject', t => {
 	});
 
 	const firstFramePromise = new Promise((resolve, reject) => {
-		stream.on('data', ({ frame }) => {
+		stream.on('data', ({frame}) => {
 			stream.destroy();
 			resolve(frame);
 		});

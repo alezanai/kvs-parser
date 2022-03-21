@@ -57,8 +57,8 @@
   "homepage": "https://github.com/piercus/kvs-parser#readme",
   "dependencies": {
     "aws-sdk": "^2.1090.0",
-    "ebml-stream": "^1.0.3",
-    "beamcoder": "^0.6.15"
+    "beamcoder": "^0.6.15",
+    "ebml-stream": "^1.0.3"
   },
   "devDependencies": {
     "ava": "^4.0.1",
