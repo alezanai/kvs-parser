@@ -3,8 +3,8 @@ const beamcoder = require('beamcoder');
 async function run() {
 	const demuxer = await beamcoder.demuxer('tmp/get_media.mkv');
 	console.log(JSON.stringify(demuxer));
-	const decoder = beamcoder.decoder({ name: 'h264' });
-	decoder.extradata = demuxer.streams[0].codecpar.extradata
+	const decoder = beamcoder.decoder({name: 'h264'});
+	decoder.extradata = demuxer.streams[0].codecpar.extradata;
 
 	let packet = {};
 	for (let x = 0; x < 10 && packet !== null; x++) {
@@ -18,7 +18,7 @@ async function run() {
 				pix_fmt: 'yuvj420p',
 				time_base: [1, 1],
 			});
-			const jpeg = await enc.encode(data.frames[0])
+			const jpeg = await enc.encode(data.frames[0]);
 		}
 	}
 }
