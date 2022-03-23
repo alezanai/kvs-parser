@@ -62,6 +62,7 @@
   },
   "devDependencies": {
     "ava": "^4.0.1",
+    "winston": "^3.6.0",
     "xo": "^0.48.0"
   },
   "ava": {
