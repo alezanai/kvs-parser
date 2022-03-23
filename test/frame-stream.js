@@ -17,7 +17,7 @@ test('FrameObject', t => {
 	});
 
 	const firstFramePromise = new Promise((resolve, reject) => {
-		stream.on('data', ({frame}) => {
+		stream.on('data', frame => {
 			stream.destroy();
 			resolve(frame);
 		});
@@ -28,9 +28,43 @@ test('FrameObject', t => {
 	});
 
 	return firstFramePromise.then(frame => {
-		t.is(frame.weight, 1920);
-		t.is(frame.height, 1920);
-		t.is(frame.data.length, 12_345);
-		t.is(frame.colorspace, 'bt709');
+		t.is(frame.width, 1920);
+		t.is(frame.height, 1080);
+		t.is(frame.data.length, 3);
+		t.is(frame.colorspace, 'unknown');
+	});
+});
+
+test('FrameObjectCount', t => {
+	const getMediaParameters = {
+		StartSelector: {
+			StartSelectorType: 'EARLIEST',
+		},
+		StreamName: 'test-stream',
+	};
+
+	const stream = new FrameStream(getMediaParameters, {
+		kinesisvideomedia,
+		kinesisvideo,
+	});
+
+	let count = 0;
+	stream.on('data', frame => {
+		console.log(count);
+		count++;
+	});
+
+	const firstFramePromise = new Promise((resolve, reject) => {
+		stream.on('end', () => {
+			resolve(count);
+		});
+
+		stream.on('error', error => {
+			reject(error);
+		});
+	});
+
+	return firstFramePromise.then(count => {
+		t.true(count > 100);
 	});
 });
