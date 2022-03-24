@@ -1,6 +1,6 @@
 const fs = require('fs');
 const beamcoder = require('beamcoder');
-const FrameStream = require('../lib/frame-stream.js');
+const IFrameStream = require('../lib/iframe-stream.js');
 const kinesisvideomedia = require('../test/mock/kinesisvideomedia.js');
 const kinesisvideo = require('../test/mock/kinesisvideo.js');
 const logger = require('../test/helpers/logger.js');
@@ -12,7 +12,7 @@ const getMediaParameters = {
 	StreamName: 'test-stream',
 };
 
-const stream = new FrameStream(getMediaParameters, {
+const stream = new IFrameStream(getMediaParameters, {
 	kinesisvideomedia,
 	kinesisvideo,
 	logger,
