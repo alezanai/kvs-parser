@@ -3,8 +3,8 @@ const test = require('ava');
 const FragmentStream = require('../lib/fragment-stream.js');
 const kinesisvideomedia = require('./mock/kinesisvideomedia.js');
 const kinesisvideo = require('./mock/kinesisvideo.js');
-const logger = require('./helpers/logger')
- 
+const logger = require('./helpers/logger.js');
+
 test('FragmentTags', t => {
 	const getMediaParameters = {
 		StartSelector: {
@@ -16,7 +16,7 @@ test('FragmentTags', t => {
 	const stream = new FragmentStream(getMediaParameters, {
 		kinesisvideomedia,
 		kinesisvideo,
-		logger
+		logger,
 	});
 
 	let count = 0;
@@ -57,12 +57,11 @@ test('FragmentTracks', t => {
 	const stream = new FragmentStream(getMediaParameters, {
 		kinesisvideomedia,
 		kinesisvideo,
-		logger
+		logger,
 	});
 
 	let count = 0;
 	const readTagsPromise = () => new Promise((resolve, reject) => {
-		
 		stream.on('data', ({tracks}) => {
 			// Tracks contains 1 track
 			t.is(tracks.length, 1);
@@ -102,15 +101,13 @@ test('FragmentTracks order', t => {
 	const stream = new FragmentStream(getMediaParameters, {
 		kinesisvideomedia,
 		kinesisvideo,
-		logger
+		logger,
 	});
 
 	let lastTimecode = 0;
-	let lastNumberOfBlocks = null
 	stream.on('data', ({cluster}) => {
-		t.true(cluster.timecode > lastTimecode)
-		lastNumberOfBlocks = cluster.blocks.length;
-		lastTimecode = cluster.timecode
+		t.true(cluster.timecode > lastTimecode);
+		lastTimecode = cluster.timecode;
 	});
 	const readTagsPromise = () => new Promise((resolve, reject) => {
 		stream.on('end', _ => {
@@ -122,7 +119,6 @@ test('FragmentTracks order', t => {
 		});
 	});
 
-	return readTagsPromise()
+	return readTagsPromise();
 });
-
 
