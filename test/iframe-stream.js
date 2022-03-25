@@ -4,7 +4,7 @@ const kinesisvideomedia = require('./mock/kinesisvideomedia.js');
 const kinesisvideo = require('./mock/kinesisvideo.js');
 const logger = require('./helpers/logger.js');
 
-test('Test IFrames', t => {
+test('TestIFrames', t => {
 	const getMediaParameters = {
 		StartSelector: {
 			StartSelectorType: 'EARLIEST',

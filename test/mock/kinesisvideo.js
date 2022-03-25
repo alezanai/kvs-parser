@@ -1,10 +1,13 @@
 const kinesisvideo = {
-	getDataEndPoint() {
+	getDataEndpoint() {
 		return {
 			promise() {
-				return Promise.resolve({
-					DataEndPoint: 'https://fakeurl',
-				});
+				return Promise.resolve(
+					{
+						data: {
+							DataEndpoint: 'https://fakeurl',
+						},
+					});
 			},
 		};
 	},

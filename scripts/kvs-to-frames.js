@@ -22,8 +22,8 @@ const encoder = beamcoder.encoder({
 	name: 'mjpeg',
 	width: 1920,
 	height: 1080,
-	pix_fmt: 'yuvj420p',
-	time_base: [1, 1],
+	// Pix_fmt: 'yuvj420p',
+	// time_base: [1, 1],
 });
 
 let id = 0;
