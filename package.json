@@ -73,7 +73,8 @@
   "xo": {
     "rules": {
       "ava/prefer-async-await": 0,
-      "unicorn/prefer-module": 0
+      "unicorn/prefer-module": 0,
+      "camelcase": 0
     }
   }
 }
