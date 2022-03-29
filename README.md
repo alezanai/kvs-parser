@@ -56,13 +56,13 @@ stream.on('data', {tags, encoded} => {
 ```
 
 
-### FrameStream
+### FragmentStream
 
-FrameStream is decoding the fragments and then extract frame for each fragment
+FragmentStream is decoding the fragments and then extract frame for each fragment
 
 ```js
 
-const {FrameStream} = require('kvs-parser');
+const {FragmentStream} = require('kvs-parser');
 
 // see https://docs.aws.amazon.com/AWSJavaScriptSDK/latest/AWS/KinesisVideoMedia.html#getMedia-property
 const getMediaParams = {
@@ -80,7 +80,7 @@ const decodingParams = {
 	onlyKeyframes: true
 };
 
-const stream = new FrameStream(getMediaParams, decodingParams)
+const stream = new FragmentStream(getMediaParams, decodingParams)
 
 stream.on('data', {tags, frame} => {
 	// tags contains 
