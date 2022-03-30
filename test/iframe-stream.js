@@ -51,7 +51,8 @@ test('TestFrameJPEG', t => {
 		kinesisvideomedia,
 		kinesisvideo,
 		logger,
-	}, 'jpeg');
+		encoder: 'jpeg',
+	});
 
 	let count = 0;
 	stream.on('data', jpeg => {
@@ -86,13 +87,14 @@ test('TestFrameJPEGWithEncoder', t => {
 		kinesisvideomedia,
 		kinesisvideo,
 		logger,
-	}, beamcoder.encoder({
-		name: 'mjpeg',
-		width: 1920,
-		height: 1080,
-		pix_fmt: 'yuvj420p',
-		time_base: [1, 1],
-	}));
+		encoder: beamcoder.encoder({
+			name: 'mjpeg',
+			width: 1920,
+			height: 1080,
+			pix_fmt: 'yuvj420p',
+			time_base: [1, 1],
+		}),
+	});
 
 	let count = 0;
 	stream.on('data', jpeg => {
