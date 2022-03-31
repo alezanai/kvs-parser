@@ -16,16 +16,16 @@ const stream = new FrameStream(getMediaParameters, {
 	kinesisvideo,
 });
 
-const encoder = beamcoder.encoder({
-	name: 'mjpeg',
-	width: 1920,
-	height: 1080,
-	pix_fmt: 'yuvj420p',
-	time_base: [1, 1],
-});
-
 let count = 0;
 stream.on('data', frame => {
+	const encoder = beamcoder.encoder({
+		name: 'mjpeg',
+		width: frame.width,
+		height: frame.height,
+		pix_fmt: 'yuvj420p',
+		time_base: [1, 1],
+	});
+
 	encoder.encode(frame).then(jpeg => {
 		const filename = `tmp/frame-${count}.jpeg`;
 		console.log(`Writing file ${filename}`);
