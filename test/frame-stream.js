@@ -3,7 +3,7 @@ const FrameStream = require('../lib/frame-stream.js');
 const kinesisvideomedia = require('./mock/kinesisvideomedia.js');
 const kinesisvideo = require('./mock/kinesisvideo.js');
 
-const logger = require('./helpers/logger')
+const logger = require('./helpers/logger.js');
 
 test('FrameObject', t => {
 	const getMediaParameters = {
@@ -16,31 +16,30 @@ test('FrameObject', t => {
 	const stream = new FrameStream(getMediaParameters, {
 		kinesisvideomedia,
 		kinesisvideo,
-		logger
+		logger,
 	});
-	let lastPts = null
+	let lastPts = null;
 	stream.on('data', frame => {
-		if(lastPts){
-			t.true(frame.pts > lastPts)
-		} 
-		
-		lastPts = frame.pts
+		if (lastPts) {
+			t.true(frame.pts > lastPts);
+		}
+
+		lastPts = frame.pts;
 		t.is(frame.width, 1920);
 		t.is(frame.height, 1080);
 		t.is(frame.data.length, 3);
 		t.is(frame.colorspace, 'unknown');
 	});
 	const streamEnds = new Promise((resolve, reject) => {
-
-		stream.on('end', frame => {
-			resolve()
+		stream.on('end', () => {
+			resolve();
 		});
 		stream.on('error', error => {
 			reject(error);
 		});
 	});
 
-	return streamEnds
+	return streamEnds;
 });
 
 test('FrameObjectCount', t => {
@@ -54,12 +53,11 @@ test('FrameObjectCount', t => {
 	const stream = new FrameStream(getMediaParameters, {
 		kinesisvideomedia,
 		kinesisvideo,
-		logger
+		logger,
 	});
 
 	let count = 0;
-	stream.on('data', frame => {
-		// console.log(`test/framestream.js: ${count}`);
+	stream.on('data', () => {
 		count++;
 	});
 
