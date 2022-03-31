@@ -26,8 +26,8 @@ stream.on('data', frame => {
 		time_base: [1, 1],
 	});
 
-	encoder.encode(frame).then(jpeg => {
-		const filename = `tmp/frame-${count}.jpeg`;
+	return encoder.encode(frame).then(jpeg => {
+		const filename = `tmp/frame-${count.toString().padStart(5, '0')}.jpg`;
 		console.log(`Writing file ${filename}`);
 		fs.writeFileSync(filename, jpeg.packets[0].data);
 		count++;
