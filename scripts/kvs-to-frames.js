@@ -1,6 +1,4 @@
 const fs = require('fs');
-const beamcoder = require('beamcoder');
-const {Writable} = require('stream')
 const FrameStream = require('../lib/frame-stream.js');
 const kinesisvideomedia = require('../test/mock/kinesisvideomedia.js');
 const kinesisvideo = require('../test/mock/kinesisvideo.js');
