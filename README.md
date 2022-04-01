@@ -16,7 +16,7 @@ Because it uses (beamcoder)[https://www.npmjs.com/package/beamcoder], in order t
 ## Features
 
 * KvsStream : stream the parsed, but not decoded Kvs raw information
-* FrameStream : stream all the frames in the video stream
+* IFrameStream : stream all the frames in the video stream
 
 ## Usage
 
@@ -58,7 +58,7 @@ stream.on('data', {tags, encoded} => {
 
 ### FragmentStream
 
-FragmentStream is decoding the fragments and then extract frame for each fragment
+FragmentStream is decoding the fragments from kvs video stream.
 
 ```js
 
@@ -92,6 +92,42 @@ stream.on('data', {tags, frame} => {
 	tags['AWS_KINESISVIDEO_ERROR_CODE']
 	tags['AWS_KINESISVIDEO_ERROR_ID']
 	
+	// frame is a beamcoder frame see https://github.com/Streampunk/beamcoder#creating-frames
+	console.log(frame);
+});
+```
+
+### IFrameStream
+
+IFrameStream is decoding the fragments and then extract frame for each fragment
+
+```js
+
+const {IFrameStream} = require('kvs-parser');
+
+// see https://docs.aws.amazon.com/AWSJavaScriptSDK/latest/AWS/KinesisVideoMedia.html#getMedia-property
+const getMediaParams = {
+ StartSelector: { /* required */
+    StartSelectorType: FRAGMENT_NUMBER | SERVER_TIMESTAMP | PRODUCER_TIMESTAMP | NOW | EARLIEST | CONTINUATION_TOKEN, /* required */
+    AfterFragmentNumber: 'STRING_VALUE',
+    ContinuationToken: 'STRING_VALUE',
+    StartTimestamp: new Date || 'Wed Dec 31 1969 16:00:00 GMT-0800 (PST)' || 123456789
+  },
+  StreamARN: 'STRING_VALUE',
+  StreamName: 'STRING_VALUE'
+};
+
+const decodingParams = {
+	onlyKeyframes: true
+};
+
+const stream = new IFrameStream(getMediaParams, {
+	kinesisvideo,
+	kinesisvideomedia,
+	encoder: 'mjpeg'
+})
+
+stream.on('data', frame => {
 	// frame is a beamcoder frame see https://github.com/Streampunk/beamcoder#creating-frames
 	console.log(frame);
 });
