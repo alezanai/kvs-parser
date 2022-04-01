@@ -15,7 +15,7 @@ const getMediaParameters = {
 const stream = new FrameStream(getMediaParameters, {
 	kinesisvideomedia,
 	kinesisvideo,
-	fps: 30,
+	fps: 25,
 	encoder: {
 		name: 'mjpeg',
 		width: 1920,
