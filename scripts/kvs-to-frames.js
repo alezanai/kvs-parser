@@ -25,13 +25,12 @@ stream.on('data', frame => {
 		pix_fmt: 'yuvj420p',
 		time_base: [1, 1],
 	});
-	count ++;
-	const frameNum = count;
+	count++;
+	const frameNumber = count;
 	return encoder.encode(frame).then(jpeg => {
-		const filename = `tmp/frame-${frameNum.toString().padStart(5, '0')}.jpg`;
+		const filename = `tmp/frame-${frameNumber.toString().padStart(5, '0')}.jpg`;
 		console.log(`Writing file ${filename}`);
 		fs.writeFileSync(filename, jpeg.packets[0].data);
-		
 	}).catch(error => {
 		throw new Error(error);
 	});

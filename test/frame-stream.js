@@ -119,7 +119,6 @@ test('TestFrameJPEGWithEncoder', t => {
 	});
 });
 
-
 test('FrameObject', t => {
 	const getMediaParameters = {
 		StartSelector: {
