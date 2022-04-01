@@ -20,15 +20,14 @@ const stream = new FrameStream(getMediaParameters, {
 		height: 1080,
 		pix_fmt: 'yuvj420p',
 		time_base: [1, 1],
-	}
+	},
 });
 
-let frameNum = 0;
+let frameNumber = 0;
 
 stream.on('data', ({encoded}) => {
-	const filename = `tmp/frame-${frameNum.toString().padStart(5, '0')}.jpg`;
+	const filename = `tmp/frame-${frameNumber.toString().padStart(5, '0')}.jpg`;
 	console.log(`Writing file ${filename}`);
-	frameNum++
-	this.frameNum ++;
+	frameNumber++;
 	fs.writeFileSync(filename, encoded.packets[0].data);
 });
