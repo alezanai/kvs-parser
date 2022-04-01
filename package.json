@@ -67,14 +67,18 @@
   },
   "ava": {
     "files": [
-      "!test/mock/*"
+      "!test/mock/*",
+      "!test/fragment-stream.js",
+      "!test/kvs-stream.js"
     ]
   },
   "xo": {
     "rules": {
       "ava/prefer-async-await": 0,
       "unicorn/prefer-module": 0,
-      "camelcase": 0
+      "camelcase": 0,
+      "ava/no-skip-test": 0,
+      "ava/no-ignored-test-files": 0
     }
   }
 }
