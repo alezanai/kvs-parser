@@ -1,12 +1,11 @@
 const test = require('ava');
-const IFrameStream = require('../lib/iframe-stream.js');
 const FrameStream = require('../lib/frame-stream.js');
 
 const kinesisvideomedia = require('./mock/kinesisvideomedia.js');
 const kinesisvideo = require('./mock/kinesisvideo.js');
 const logger = require('./helpers/logger.js');
 
-test('TestFrameObject', t => {
+test('TestFrameObject 0', t => {
 	const getMediaParameters = {
 		StartSelector: {
 			StartSelectorType: 'EARLIEST',
@@ -14,7 +13,8 @@ test('TestFrameObject', t => {
 		StreamName: 'test-stream',
 	};
 
-	const stream = new IFrameStream(getMediaParameters, {
+	const stream = new FrameStream(getMediaParameters, {
+		keyframeOnly: true,
 		kinesisvideomedia,
 		kinesisvideo,
 		logger,
@@ -22,42 +22,6 @@ test('TestFrameObject', t => {
 
 	let count = 0;
 	stream.on('data', () => {
-		count++;
-	});
-
-	const readIFramesPromise = new Promise((resolve, reject) => {
-		stream.on('end', () => {
-			resolve(count);
-		});
-
-		stream.on('error', error => {
-			reject(error);
-		});
-	});
-
-	return readIFramesPromise.then(count => {
-		t.is(count, 16);
-	});
-});
-
-test('TestFrameJPEG', t => {
-	const getMediaParameters = {
-		StartSelector: {
-			StartSelectorType: 'EARLIEST',
-		},
-		StreamName: 'test-stream',
-	};
-
-	const stream = new IFrameStream(getMediaParameters, {
-		kinesisvideomedia,
-		kinesisvideo,
-		logger,
-		encoder: 'mjpeg',
-	});
-
-	let count = 0;
-	stream.on('data', jpeg => {
-		t.is(jpeg.type, 'packets');
 		count++;
 	});
 
@@ -84,10 +48,11 @@ test('TestFrameJPEGWithEncoder', t => {
 		StreamName: 'test-stream',
 	};
 
-	const stream = new IFrameStream(getMediaParameters, {
+	const stream = new FrameStream(getMediaParameters, {
 		kinesisvideomedia,
 		kinesisvideo,
 		logger,
+		keyframeOnly: true,
 		encoder: {
 			name: 'mjpeg',
 			width: 1920,
@@ -98,8 +63,8 @@ test('TestFrameJPEGWithEncoder', t => {
 	});
 
 	let count = 0;
-	stream.on('data', jpeg => {
-		t.is(jpeg.type, 'packets');
+	stream.on('data', ({encoded}) => {
+		t.is(encoded.type, 'packets');
 		count++;
 	});
 
@@ -132,9 +97,9 @@ test('FrameObject', t => {
 		logger,
 	});
 	let lastPts = null;
-	stream.on('data', frame => {
+	stream.on('data', ({frame}) => {
 		if (lastPts) {
-			t.true(frame.pts > lastPts);
+			t.true(frame.pts + 25 >= lastPts);
 		}
 
 		lastPts = frame.pts;
