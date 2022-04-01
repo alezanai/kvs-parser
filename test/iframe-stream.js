@@ -1,5 +1,4 @@
 const test = require('ava');
-const beamcoder = require('beamcoder');
 const IFrameStream = require('../lib/iframe-stream.js');
 const kinesisvideomedia = require('./mock/kinesisvideomedia.js');
 const kinesisvideo = require('./mock/kinesisvideo.js');
@@ -51,7 +50,7 @@ test('TestFrameJPEG', t => {
 		kinesisvideomedia,
 		kinesisvideo,
 		logger,
-		encoder: 'jpeg',
+		encoder: 'mjpeg',
 	});
 
 	let count = 0;
@@ -87,13 +86,13 @@ test('TestFrameJPEGWithEncoder', t => {
 		kinesisvideomedia,
 		kinesisvideo,
 		logger,
-		encoder: beamcoder.encoder({
+		encoder: {
 			name: 'mjpeg',
 			width: 1920,
 			height: 1080,
 			pix_fmt: 'yuvj420p',
 			time_base: [1, 1],
-		}),
+		},
 	});
 
 	let count = 0;
