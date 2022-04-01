@@ -6,18 +6,23 @@ This library is using
 * [ebml-stream](https://www.npmjs.com/package/ebml-stream)
 * [beamcoder](https://www.npmjs.com/package/beamcoder)
 
-Because it uses [beamcoder](https://www.npmjs.com/package/beamcoder), in order to use it, you need to have ffmpeg on your system, see [beamcoder installation instructions](https://github.com/Streampunk/beamcoder#installation) for the detailed steps about how to set up ffmpeg lib.
+## Features
+
+The lib exposes stream to manipulate the kinesis video streams.
+It is exposed at different level (from higher-level to lower-level)
+
+* `FrameStream` : higher-level API, stream each frame one by one
+* `FragmentStream` : stream the matroska segments as an object `{tracks, cluster, tags}` for each segment
+* `KvsStream` : stream the matroska raw content of the kvs stream as [ebml-stream](https://www.npmjs.com/package/ebml-stream) elements
 
 ## Context
 
 * The existing parser library is [in Java](https://docs.aws.amazon.com/kinesisvideostreams/latest/dg/parser-library.html)
 * The existing [getMedia](https://docs.aws.amazon.com/AWSJavaScriptSDK/latest/AWS/KinesisVideoMedia.html#getMedia-property) is a little bit [tricky](https://stackoverflow.com/questions/53921074/how-to-get-metadata-from-amazon-kinesis-video-streams-via-video-js-and-http-stre/71298009#71298009) to use.
 
-## Features
+## Installation
 
-* `FrameStream` : higher-level API, stream all the frames (or only keyframes) in the video stream
-* `KvsStream` : stream the matroska raw content of the kvs stream
-* `FragmentStream` : stream the matroska segments as an object `{tracks, cluster, tags}` which correspond to segment information
+You need to have ffmpeg libraries on your system, see [beamcoder installation instructions](https://github.com/Streampunk/beamcoder#installation).
 
 # Usage
 
@@ -58,7 +63,7 @@ const stream = new FrameStream(getMediaParameters, {
 
 let frameNum = 0;
 
-stream.on('data', ({encoded, tags}) => {
+stream.on('data', ({encoded, tags, frame}) => {
 	const filename = `tmp/frame-${frameNum.toString().padStart(5, '0')}.jpg`;
 	console.log(`Writing file ${filename}`);
 	frameNum++
@@ -71,3 +76,9 @@ stream.on('data', ({encoded, tags}) => {
 * `encoder` : parameter for a [beamcoder encoder](https://github.com/Streampunk/beamcoder#encoder) , if `null` the beamcoder [frame](https://github.com/Streampunk/beamcoder#creating-frames) will be streamed
 * `fps` : the fps of the stream, in case you face an error like `[mjpeg @ 0x43550c0] Invalid pts (1646229470965) <= last (1646229470990)` you might want to increase your fps to avoid collision between block's fps 
 * `keyframeOnly` : if `true` only stream the keyframes, this is a safe way to use this library
+
+### Output
+
+* `encoded` : encoded packets see [beamcoder packets](https://github.com/Streampunk/beamcoder#creating-packets)
+* `frame` : raw beamcoder [frame](https://github.com/Streampunk/beamcoder#creating-frames)
+* `tags` : [Kinesis video Stream mkv tags](https://docs.aws.amazon.com/kinesisvideostreams/latest/dg/API_dataplane_GetMedia.html#API_dataplane_GetMedia_ResponseSyntax) 
