@@ -67,9 +67,7 @@
   },
   "ava": {
     "files": [
-      "!test/mock/*",
-      "!test/fragment-stream.js",
-      "!test/kvs-stream.js"
+      "!test/mock/*"
     ]
   },
   "xo": {
