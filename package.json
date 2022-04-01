@@ -8,7 +8,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/piercus/kvs-parser.git"
+    "url": "git+https://github.com/alezanai/kvs-parser.git"
   },
   "release": {
     "branches": [
@@ -52,9 +52,9 @@
   "author": "Pierre Colle <piercus@gmail.com>",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/piercus/kvs-parser/issues"
+    "url": "https://github.com/alezanai/kvs-parser/issues"
   },
-  "homepage": "https://github.com/piercus/kvs-parser#readme",
+  "homepage": "https://github.com/alezanai/kvs-parser#readme",
   "dependencies": {
     "aws-sdk": "^2.1090.0",
     "beamcoder": "^0.6.15",
