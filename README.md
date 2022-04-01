@@ -62,7 +62,6 @@ stream.on('data', ({encoded, tags}) => {
 	const filename = `tmp/frame-${frameNum.toString().padStart(5, '0')}.jpg`;
 	console.log(`Writing file ${filename}`);
 	frameNum++
-	this.frameNum ++;
 	fs.writeFileSync(filename, encoded.packets[0].data);
 });
 ```
