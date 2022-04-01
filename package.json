@@ -18,21 +18,7 @@
       "@semantic-release/commit-analyzer",
       "@semantic-release/release-notes-generator",
       "@semantic-release/npm",
-      [
-        "@semantic-release/github",
-        {
-          "assets": [
-            {
-              "path": "dist/kalman-filter.js",
-              "label": "kalman-filter.js (Raw JS distribution)"
-            },
-            {
-              "path": "dist/kalman-filter.min.js",
-              "label": "kalman-filter.min.js (Minified JS distribution)"
-            }
-          ]
-        }
-      ],
+      "@semantic-release/github",
       "@semantic-release/git"
     ]
   },
@@ -61,7 +47,12 @@
     "ebml-stream": "^1.0.3"
   },
   "devDependencies": {
+    "@semantic-release/commit-analyzer": "^9.0.2",
+    "@semantic-release/github": "^8.0.4",
+    "@semantic-release/npm": "^9.0.1",
+    "@semantic-release/release-notes-generator": "^10.0.3",
     "ava": "^4.0.1",
+    "semantic-release": "^19.0.2",
     "winston": "^3.6.0",
     "xo": "^0.48.0"
   },
