@@ -24,6 +24,10 @@ It is exposed at different level (from higher-level to lower-level)
 
 You need to have ffmpeg libraries on your system, see [beamcoder installation instructions](https://github.com/Streampunk/beamcoder#installation).
 
+```
+npm install kvs-parser
+```
+
 # Usage
 
 ## FrameStream
