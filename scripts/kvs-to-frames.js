@@ -1,4 +1,4 @@
-const fs = require('fs');
+const fs = require('fs').promises;
 const FrameStream = require('../lib/frame-stream.js');
 const kinesisvideomedia = require('../test/mock/kinesisvideomedia.js');
 const kinesisvideo = require('../test/mock/kinesisvideo.js');
@@ -13,7 +13,7 @@ const getMediaParameters = {
 const stream = new FrameStream(getMediaParameters, {
 	kinesisvideomedia,
 	kinesisvideo,
-	fps: 25,
+	fps: 30,
 	encoder: {
 		name: 'mjpeg',
 		width: 1920,
@@ -24,10 +24,20 @@ const stream = new FrameStream(getMediaParameters, {
 });
 
 let frameNumber = 0;
+const startDate = new Date();
 
 stream.on('data', ({encoded}) => {
+	const currentDate = new Date();
 	const filename = `tmp/frame-${frameNumber.toString().padStart(5, '0')}.jpg`;
-	console.log(`Writing file ${filename}`);
+	const fps = frameNumber * 1000 / (currentDate.getTime() - startDate.getTime());
+
+	console.log(`Writing file ${filename} at ${fps}`);
 	frameNumber++;
-	fs.writeFileSync(filename, encoded.packets[0].data);
+
+	return fs.writeFile(filename, encoded.packets[0].data).then(() => new Promise(resolve => {
+		setTimeout(resolve, 5000);
+	}));
 });
+
+// Stream.pause();
+
