@@ -154,3 +154,55 @@ test('FrameObjectCount', t => {
 	});
 });
 
+test('TestProducerTimestamp', t => {
+	const getMediaParameters = {
+		StartSelector: {
+			StartSelectorType: 'EARLIEST',
+		},
+		StreamName: 'test-stream',
+	};
+
+	const stream = new FrameStream(getMediaParameters, {
+		kinesisvideomedia,
+		kinesisvideo,
+		logger,
+		fps: 30,
+		encoder: {
+			name: 'mjpeg',
+			width: 1920,
+			height: 1080,
+			pix_fmt: 'yuvj420p',
+			time_base: [1, 1],
+		},
+	});
+
+	let count = 0;
+	let previousTimestamp;
+	let previousDate;
+	stream.on('data', ({tags}) => {
+		const currentTimestamp = tags.AWS_KINESISVIDEO_PRODUCER_TIMESTAMP;
+		const currentDate = (new Date(currentTimestamp * 1000)).toISOString();
+		if (previousTimestamp) {
+			t.true(previousTimestamp !== currentTimestamp);
+			t.true(previousDate !== currentDate);
+		}
+
+		previousTimestamp = currentTimestamp;
+		previousDate = currentDate;
+		count++;
+	});
+
+	const firstFramePromise = new Promise((resolve, reject) => {
+		stream.on('end', () => {
+			resolve(count);
+		});
+
+		stream.on('error', error => {
+			reject(error);
+		});
+	});
+
+	return firstFramePromise.then(count => {
+		t.is(count, 130);
+	});
+});
