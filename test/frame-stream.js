@@ -178,13 +178,17 @@ test('TestProducerTimestamp', t => {
 
 	let count = 0;
 	let previousTimestamp;
+	let previousDate;
 	stream.on('data', ({tags}) => {
 		const currentTimestamp = tags.AWS_KINESISVIDEO_PRODUCER_TIMESTAMP;
+		const currentDate = (new Date(currentTimestamp * 1000)).toISOString();
 		if (previousTimestamp) {
 			t.true(previousTimestamp !== currentTimestamp);
+			t.true(previousDate !== currentDate);
 		}
 
 		previousTimestamp = currentTimestamp;
+		previousDate = currentDate;
 		count++;
 	});
 
